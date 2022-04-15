@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-size: 14px;
+  font-family: 'PT Sans', sans-serif;
+  color: #000;
+}
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.title {
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+.wrap {
+  padding: 44px 0 0 118px;
+}
+.users-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* list */
+.list,
+.view-block {
+  width: 45%;
+}
+.list__title,
+.wiew__full-name_name {
+  font-size: 36px;
+  font-weight: 400;
+}
+.list__title {
+  margin-bottom: 20px;
+}
+.list__block_users_item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #E0E0E0;
+  padding-bottom: 7px;
+  margin-bottom: 20px;
+}
+.full-name__name {
+  font-size: 16px;
+}
+.full-name__city {
+  color: #4F4F4F;
+}
+.buttons {
+  display: flex;
+}
+.buttons__number {
+  color: #4F4F4F;
+}
+.buttons__btn {
+  padding: 10px;
+  cursor: pointer;
+  border: 0;
+  outline: none;
+}
+.buttons__btn_wiew {
+  color: #fff;
+  background: #4F4F4F;
+  margin: 0 9px 0 21px;
+}
+.buttons__btn_delete {
+  color: #4F4F4F;
+  background: #E0E0E0;
+}
+
+/* wiew */
+.bl {
+  margin-bottom: 30px;
+}
+.wiew__company_subtext,
+.wiew__full-name_id,
+.wiew__adress_geo span {
+  color: #4F4F4F;
+}
+.wiew__adress_ad,
+.wiew__phone_phone,
+.wiew__company_text {
+  font-size: 18px;
+}
+.wiew__website_web {
+  font-size: 18px;
+  color: #000;
+  text-decoration: none;
+  border-bottom: 1px solid #4F4F4F;
+}
