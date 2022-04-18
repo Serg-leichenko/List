@@ -3,18 +3,21 @@
     <div class="wrap">
       <div class="users-list">
         <!-- list -->
-        <div class="list">
-          <h2 class="list__title">List</h2>
-          <div class="list__block">
-            <ul
-              class="list__block_users"
+
+        <h2 class="list__title">List</h2>
+
+        <div class="list__block">
+          <ul class="list__block_users">
+            <li
               v-for="(user, index) in users"
               :key="index"
+              class="lb_item list__block_users_item"
+              :class="{ 'lb_ext-active': current === index }"
             >
-              <li class="list__block_users_item">
-                <div class="full-name">
-                  <p class="full-name__name">{{ user.name }}</p>
-                  <p class="full-name__city">{{ user.address.city }}</p>
+              <div class="list">
+                <div class="list__full-name">
+                  <p class="list__full-name_name">{{ user.name }}</p>
+                  <p class="flist__ull-name_city">{{ user.address.city }}</p>
                 </div>
                 <div class="buttons">
                   <p class="buttons__number">#{{ user.id }}</p>
@@ -22,64 +25,26 @@
                     class="buttons__btn buttons__btn_wiew"
                     @click="selectUser(index)"
                   >
-                    wiew
+                    view
                   </button>
                   <button
                     class="buttons__btn buttons__btn_delete"
-                    @click="removeUser"
+                    @click="removeUser(index)"
                   >
                     delete
                   </button>
                 </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- user wiew -->
-        <div class="view-block" v-if="visible">
-          <div class="wiew" v-for="(user, index) in users" :key="index">
-            <div class="wiew__full-name bl">
-              <h2 class="wiew__full-name_name">{{ user.name }}</h2>
-              <p class="wiew__full-name_id">
-                <span>id: {{ user.id }} |</span>
-                <span> username: {{ user.username }} |</span>
-                <span> email: {{ user.email }}</span>
-              </p>
-            </div>
-            <div class="wiew__adress bl">
-              <h3 class="wiew__adress_title title">Address</h3>
-              <p class="wiew__adress_ad">
-                {{ user.address.zipcode }}
-                {{ user.address.street }}
-                {{ user.address.city }}
-                {{ user.address.suite }}
-              </p>
-              <p class="wiew__adress_geo">
-                Geo:
-                <span
-                  >Lat {{ user.address.geo.lat }} Lng
-                  {{ user.address.geo.lng }}</span
-                >
-              </p>
-            </div>
-            <div class="wiew__phone bl">
-              <h3 class="wiew__phone_title title">Phone</h3>
-              <p class="wiew__phone_phone">{{ user.phone }}</p>
-            </div>
-            <div class="wiew__website bl">
-              <h3 class="wiew__website_title title">Website</h3>
-              <a href="#" class="wiew__website_web">{{ user.website }}</a>
-            </div>
-            <div class="wiew__company bl">
-              <h3 class="wiew__company_title title">Company</h3>
-              <p class="wiew__company_text">
-                {{ user.company.name }}
-              </p>
-              <p class="wiew__company_subtext">
-                {{ user.company.catchPhrase }} <br />{{ user.company.bs }}
-              </p>
-            </div>
-          </div>
+              </div>
+              <transition
+                mode="out-in"
+                name="faq-fade"
+                :before-enter="beforeEnter"
+                :enter="enter"
+              >
+                <UserDetail :user_detail="user" v-show="current === index" />
+              </transition>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -87,26 +52,38 @@
 </template>
 
 <script>
+import UserDetail from "@/components/UserDetail";
 import axios from "axios";
 export default {
+  components: {
+    UserDetail,
+  },
   data() {
     return {
       users: [],
-      visible: false,
+      current: -10,
     };
   },
   created() {
     this.getFolders();
   },
   methods: {
-    selectUser(index) {
-      if (index === 0) {
-        console.log(index);
+    selectUser(newUser) {
+      if (newUser === this.current) {
+        this.current = -10;
       } else {
-        console.log("index");
+        this.current = newUser;
       }
-
-      this.visible = !this.visible;
+    },
+    beforeEnter(_t) {
+      _t.style.display = "block";
+      _t.style.maxHeight = null;
+      _t.myHeight = _t.offsetHeight;
+      _t.style.maxHeight = 0;
+      _t.style.display = null;
+    },
+    enter(_t) {
+      _t.style.maxHeight = _t.myHeight + "px";
     },
     removeUser(x) {
       this.users.splice(x, 1);
